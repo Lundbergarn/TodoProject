@@ -91,56 +91,60 @@ const TodoList = () => {
 
   return (
     <div style={{ margin: '2rem auto'}}>
-      <ListGroup style={{ marginBottom: '1rem' }}>
+
+
+      <ListGroup  style={{ marginBottom: '1rem' }}>
         <TransitionGroup className="todo-list" component={null}>
-          {items.map(({ id, text, checked }) => (
-            <CSSTransition
-              key={id}
-              timeout={500}
-              classNames="item"
-            >
-              <ListGroup.Item onClick={(e) => handleFinished(e.target, id)}>
+          <div className="drag-container">
+            {items.map(({ id, text, checked }) => (
+              <CSSTransition
+                key={id}
+                timeout={500}
+                classNames="item"
+              > 
+                <ListGroup.Item className="drag-box" onClick={(e) => handleFinished(e.target, id)}>
 
-                {/* <CustomInput
-                  onChange={() => handleCheckbox(id)}
-                  checked={checked}
-                  type="checkbox"
-                  id={`"finish"${id}`}
-                /> */}
-          
-                <Button
-                  className="remove-btn"
-                  variant="danger"
-                  size="sm"
-                  onClick={(e) => removeItem(e, id)}
-                >
-                  <i className="material-icons">delete</i>
-                </Button>
+                  {/* <CustomInput
+                    onChange={() => handleCheckbox(id)}
+                    checked={checked}
+                    type="checkbox"
+                    id={`"finish"${id}`}
+                  /> */}
+            
+                  <Button
+                    className="remove-btn"
+                    variant="danger"
+                    size="sm"
+                    onClick={(e) => removeItem(e, id)}
+                  >
+                    <i className="material-icons">delete</i>
+                  </Button>
 
-                <Button
-                  variant="info"
-                  size="sm"
-                  onClick={(e) => toggleUpdateInput(e, text, id)}
-                >
-                 <i className="material-icons">edit</i>
-                </Button>
+                  <Button
+                    variant="info"
+                    size="sm"
+                    onClick={(e) => toggleUpdateInput(e, text, id)}
+                  >
+                  <i className="material-icons">edit</i>
+                  </Button>
 
-                <span style={{padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
+                  <span style={{padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
 
-                {openUpdateText === id ? 
-                <Form className="form" onSubmit={(e) => onUpdateSubmit(e, id)}>
-                  <Input
-                    value={updateValue}
-                    type="text"
-                    name="todo"
-                    placeholder="Update todo"
-                    onChange={(e) => handleUpdateValue(e)}
-                  ></Input>
-                </Form> : null}
-                
-              </ListGroup.Item>
-            </CSSTransition>
-          ))}
+                  {openUpdateText === id ? 
+                  <Form className="form" onSubmit={(e) => onUpdateSubmit(e, id)}>
+                    <Input
+                      value={updateValue}
+                      type="text"
+                      name="todo"
+                      placeholder="Update todo"
+                      onChange={(e) => handleUpdateValue(e)}
+                    ></Input>
+                  </Form> : null}
+                  
+                </ListGroup.Item>
+              </CSSTransition>
+            ))}
+          </div>
         </TransitionGroup>
       </ListGroup>
       <Button
