@@ -33,7 +33,7 @@ const ItemModal = (props) => {
     <div>
       <Button
         color="dark"
-        style={{ marginBottom: '2rem' }}
+        style={{ marginBottom: '2rem', width: "100%" }}
         onClick={toggle}
       >Add Todo</Button>
 
@@ -41,23 +41,23 @@ const ItemModal = (props) => {
         isOpen={modal}
         toggle={toggle}
       >
-        <ModalHeader toggle={toggle}>Add To Shopping List</ModalHeader>
+        <ModalHeader toggle={toggle}>Add Todo</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for="item">Item</Label>
+              <Label for="todo">Todo</Label>
               <Input
-                type="text"
+                type="todo"
                 name="name"
-                id="item"
-                placeholder="Add shopping item"
+                id="todo"
+                placeholder="Add todo"
                 onChange={onChange}
               ></Input>
               <Button
                 color="dark"
                 style={{ marginTop: '2rem' }}
                 block
-              >Add Item</Button>
+              >Add Todo</Button>
             </FormGroup>
           </Form>
         </ModalBody>

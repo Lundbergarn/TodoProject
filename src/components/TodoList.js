@@ -157,7 +157,7 @@ const TodoList = () => {
         </TransitionGroup>
       </ListGroup>
 
-      <InputModal 
+      <InputModal
         addItem={addItem}
       />
     </div>
