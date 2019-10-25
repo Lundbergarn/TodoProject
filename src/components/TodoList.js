@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Container, ListGroup, Button } from 'react-bootstrap';
+import { Container, ListGroup, Button, FormGroup } from 'react-bootstrap';
+import { Input, Form, Label } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import uuid from 'uuid';
 
@@ -12,6 +13,10 @@ const TodoList = () => {
     { id: uuid(), text: 'Invite friends over' },
     { id: uuid(), text: 'Fix the TV' },
   ]);
+
+  const [openUpdateText, setOpenUpdateText] = useState('');
+
+
 
   function addItem() {
     const text = prompt('Enter some text');
@@ -26,10 +31,27 @@ const TodoList = () => {
     )
   }
 
+  function openUpdate(id) {
+    if (openUpdateText === '') {
+      setOpenUpdateText(id);
+    } else setOpenUpdateText('')
+  }
+
+  function updateTodo(id, input) {
+    let updates = items.map(item => {
+      if(item.id === id) {
+        item.text = input;
+      }
+      return item;
+    });
+    setItems([...updates]);
+  }
+
+
   return (
-    <div style={{ margin: '2rem auto', maxWidth: '500px' }}>
+    <div style={{ margin: '2rem auto'}}>
       <ListGroup style={{ marginBottom: '1rem' }}>
-        <TransitionGroup className="todo-list">
+        <TransitionGroup className="todo-list" component={null}>
           {items.map(({ id, text }) => (
             <CSSTransition
               key={id}
@@ -45,7 +67,25 @@ const TodoList = () => {
                 >
                   &times;
                 </Button>
-                {text}
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={() => openUpdate(id)}
+                >
+                 0
+                </Button>
+                <span style={{padding: "0 20px", width: "100%", lineHeight: "2.4rem"}}>{text}</span>
+
+                {openUpdateText === id ? 
+                <Form>
+                  <Input
+                    type="text"
+                    name="todo"
+                    placeholder="Update todo"
+                    onChange={(e) => updateTodo(id, e.target.value)}
+                  ></Input>
+                </Form> : null}
+                
               </ListGroup.Item>
             </CSSTransition>
           ))}

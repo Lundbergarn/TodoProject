@@ -1,20 +1,22 @@
 .remove-btn {
   margin-right: 0.5rem;
 }
-
+.btn {
+  min-width: 40px;
+}
 .item-enter {
   opacity: 0;
 }
 .item-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  transition: opacity 250ms ease-in;
 }
 .item-exit {
   opacity: 1;
 }
 .item-exit-active {
   opacity: 0;
-  transition: opacity 500ms ease-in;
+  transition: opacity 250ms ease-in;
 }
 
 .list-group-item {
