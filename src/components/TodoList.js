@@ -102,7 +102,7 @@ const TodoList = () => {
                 timeout={500}
                 classNames="item"
               > 
-                <ListGroup.Item className="drag-box" onClick={(e) => handleFinished(e.target, id)}>
+                <ListGroup.Item className="drag-box" dragobj="0" onClick={(e) => handleFinished(e.target, id)}>
 
                   {/* <CustomInput
                     onChange={() => handleCheckbox(id)}
