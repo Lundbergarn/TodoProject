@@ -59,3 +59,17 @@
 .finished span{
   text-decoration: line-through;
 }
+
+.animated-draggable-item {
+  animation-name: dragSwipe;
+  animation-duration: 0.2s;
+}
+@keyframes dragSwipe {
+  from {transform: translateX(-30px); opacity: 0};
+  to {transform: translateX(0px); opacity: 1}
+}
+
+.not-animated {
+  transition: none;
+}
+

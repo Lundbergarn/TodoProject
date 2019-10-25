@@ -184,6 +184,7 @@ function mouseMove(ev) {
                     elementInstance.setAttribute('startHeight', parseInt(elementInstance.offsetHeight, 10));
                     elementInstance.setAttribute('startLeft', pos.x);
                     elementInstance.setAttribute('startTop', pos.y);
+                    elementInstance.classList.add("animated-draggable-item");
                 }
             }
         }
