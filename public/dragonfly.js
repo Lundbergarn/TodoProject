@@ -331,8 +331,8 @@ function dragonfly(element, callback) {
  */
 document.addEventListener('DOMContentLoaded', function () {
     'use strict';
-
-    dragonfly('.drag-container', function () {
-        console.log('This is a callback');
-    });
+    dragonfly('.drag-container');
+    // dragonfly('.drag-container', function () {
+    //     console.log('This is a callback');
+    // });
 });

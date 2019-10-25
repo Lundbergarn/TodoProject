@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
-import { ListGroup, Button } from 'react-bootstrap';
-import { Input, Form, CustomInput } from 'reactstrap';
+import {
+  ListGroup,
+  Button } from 'react-bootstrap';
+import {
+  Input,
+  Form
+} from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import uuid from 'uuid';
 
 import './styles.css';
+import InputModal from './ItemModal';
 
 const TodoList = () => {
   const [items, setItems] = useState([
@@ -18,8 +24,7 @@ const TodoList = () => {
   const [updateValue, setUpdateValue] = useState('');
 
 
-  function addItem() {
-    const text = prompt('Enter some text');
+  function addItem(text) {
     if (text) {
       setItems(items => [...items, { id: uuid(), text }]);
     }
@@ -91,68 +96,70 @@ const TodoList = () => {
 
   return (
     <div style={{ margin: '2rem auto'}}>
-
-
       <ListGroup  style={{ marginBottom: '1rem' }}>
-        <TransitionGroup className="todo-list" component={null}>
-          <div className="drag-container">
-            {items.map(({ id, text, checked }) => (
-              <CSSTransition
-                key={id}
-                timeout={500}
-                classNames="item"
-              > 
-                <ListGroup.Item className="drag-box" dragobj="0" onClick={(e) => handleFinished(e.target, id)}>
+        <TransitionGroup className="todo-list drag-container">
+          {items.map(({ id, text, checked }) => (
+            <CSSTransition
+              key={id}
+              timeout={500}
+              classNames="item"
+            > 
+              <ListGroup.Item
+                className="drag-box"
+                dragobj="0"
+                onClick={(e) => handleFinished(e.target, id)}
+              >
 
-                  {/* <CustomInput
-                    onChange={() => handleCheckbox(id)}
-                    checked={checked}
-                    type="checkbox"
-                    id={`"finish"${id}`}
-                  /> */}
-            
-                  <Button
-                    className="remove-btn"
-                    variant="danger"
-                    size="sm"
-                    onClick={(e) => removeItem(e, id)}
-                  >
-                    <i className="material-icons">delete</i>
-                  </Button>
+                {/* <CustomInput
+                  onChange={() => handleCheckbox(id)}
+                  checked={checked}
+                  type="checkbox"
+                  id={`"finish"${id}`}
+                /> */}
+          
+                <Button
+                  className="remove-btn"
+                  variant="danger"
+                  size="sm"
+                  onClick={(e) => removeItem(e, id)}
+                >
+                  <i className="material-icons">delete</i>
+                </Button>
 
-                  <Button
-                    variant="info"
-                    size="sm"
-                    onClick={(e) => toggleUpdateInput(e, text, id)}
-                  >
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={(e) => toggleUpdateInput(e, text, id)}
+                >
                   <i className="material-icons">edit</i>
-                  </Button>
+                </Button>
 
-                  <span style={{padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
+                <span style={{padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
 
-                  {openUpdateText === id ? 
-                  <Form className="form" onSubmit={(e) => onUpdateSubmit(e, id)}>
-                    <Input
-                      value={updateValue}
-                      type="text"
-                      name="todo"
-                      placeholder="Update todo"
-                      onChange={(e) => handleUpdateValue(e)}
-                    ></Input>
-                  </Form> : null}
-                  
-                </ListGroup.Item>
-              </CSSTransition>
-            ))}
-          </div>
+                {openUpdateText === id ?
+                <Form
+                  className="form"
+                  onSubmit={(e) => onUpdateSubmit(e, id)}
+                >
+                  <Input
+                    value={updateValue}
+                    type="text"
+                    name="todo"
+                    placeholder="Update todo"
+                    onChange={(e) => handleUpdateValue(e)}
+                  ></Input>
+                </Form>
+                : null}
+                
+              </ListGroup.Item>
+            </CSSTransition>
+          ))}
         </TransitionGroup>
       </ListGroup>
-      <Button
-        className="btn-success"
-        onClick={() => addItem()}
-      >
-        Add Item
-      </Button>
+
+      <InputModal 
+        addItem={addItem}
+      />
     </div>
   );
 }
