@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Container, ListGroup, Button, FormGroup } from 'react-bootstrap';
-import { Input, Form, Label } from 'reactstrap';
+import { ListGroup, Button } from 'react-bootstrap';
+import { Input, Form, CustomInput } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import uuid from 'uuid';
 
@@ -8,14 +8,14 @@ import './styles.css';
 
 const TodoList = () => {
   const [items, setItems] = useState([
-    { id: uuid(), text: 'Buy eggs' },
-    { id: uuid(), text: 'Pay bills' },
-    { id: uuid(), text: 'Invite friends over' },
-    { id: uuid(), text: 'Fix the TV' },
+    { id: uuid(), text: 'Buy eggs', checked: '' },
+    { id: uuid(), text: 'Pay bills', checked: '' },
+    { id: uuid(), text: 'Invite friends over', checked: '' },
+    { id: uuid(), text: 'Fix the TV', checked: '' },
   ]);
 
   const [openUpdateText, setOpenUpdateText] = useState('');
-
+  const [updateValue, setUpdateValue] = useState('');
 
 
   function addItem() {
@@ -25,19 +25,39 @@ const TodoList = () => {
     }
   }
 
-  function removeItem(id) {
+  function removeItem(e, id) {
+    e.stopPropagation();
     setItems(items =>
       items.filter(item => item.id !== id)
     )
   }
-
-  function openUpdate(id) {
-    if (openUpdateText === '') {
-      setOpenUpdateText(id);
-    } else setOpenUpdateText('')
+  
+  function handleUpdateValue(e) {
+    setUpdateValue(e.target.value);
   }
 
-  function updateTodo(id, input) {
+  function toggleUpdateInput(e, text, id) {
+    e.stopPropagation();
+    if (openUpdateText === '') 
+    {
+      setUpdateValue(text)
+      setOpenUpdateText(id);
+    }
+    else if (openUpdateText === id) 
+    {
+      setOpenUpdateText('');
+      updateItem(id, updateValue);
+      setOpenUpdateText('');
+      setUpdateValue('');
+    }
+    else 
+    {
+      setOpenUpdateText(id);
+      setUpdateValue(text)
+    }
+  }
+
+  function updateItem(id, input) {
     let updates = items.map(item => {
       if(item.id === id) {
         item.text = input;
@@ -47,42 +67,74 @@ const TodoList = () => {
     setItems([...updates]);
   }
 
+  function onUpdateSubmit(e, id) {
+    e.preventDefault();
+    updateItem(id, updateValue);
+    setOpenUpdateText('');
+    setUpdateValue('');
+  }
+
+  function handleCheckbox(id) {
+    let updates = items.map(item => {
+      if(item.id === id) {
+        item.checked = !item.checked;
+      }
+      return item;
+    });
+    setItems([...updates]);
+  }
+  
+  function handleFinished(e, id) {
+    e.classList.toggle("finished")
+    handleCheckbox(id)
+  }
 
   return (
     <div style={{ margin: '2rem auto'}}>
       <ListGroup style={{ marginBottom: '1rem' }}>
         <TransitionGroup className="todo-list" component={null}>
-          {items.map(({ id, text }) => (
+          {items.map(({ id, text, checked }) => (
             <CSSTransition
               key={id}
               timeout={500}
               classNames="item"
             >
-              <ListGroup.Item>
+              <ListGroup.Item onClick={(e) => handleFinished(e.target, id)}>
+
+                {/* <CustomInput
+                  onChange={() => handleCheckbox(id)}
+                  checked={checked}
+                  type="checkbox"
+                  id={`"finish"${id}`}
+                /> */}
+          
                 <Button
                   className="remove-btn"
                   variant="danger"
                   size="sm"
-                  onClick={() => removeItem(id)}
+                  onClick={(e) => removeItem(e, id)}
                 >
-                  &times;
+                  <i className="material-icons">delete</i>
                 </Button>
+
                 <Button
                   variant="info"
                   size="sm"
-                  onClick={() => openUpdate(id)}
+                  onClick={(e) => toggleUpdateInput(e, text, id)}
                 >
-                 0
+                 <i className="material-icons">edit</i>
                 </Button>
-                <span style={{padding: "0 20px", width: "100%", lineHeight: "2.4rem"}}>{text}</span>
+
+                <span style={{padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
 
                 {openUpdateText === id ? 
-                <Form>
+                <Form className="form" onSubmit={(e) => onUpdateSubmit(e, id)}>
                   <Input
+                    value={updateValue}
                     type="text"
                     name="todo"
                     placeholder="Update todo"
-                    onChange={(e) => updateTodo(id, e.target.value)}
+                    onChange={(e) => handleUpdateValue(e)}
                   ></Input>
                 </Form> : null}
                 
@@ -92,6 +144,7 @@ const TodoList = () => {
         </TransitionGroup>
       </ListGroup>
       <Button
+        className="btn-success"
         onClick={() => addItem()}
       >
         Add Item
