@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/TodoProject/static/css/main.323fea3d.chunk.css",
+    "main.css": "/TodoProject/static/css/main.f7e99d48.chunk.css",
     "main.js": "/TodoProject/static/js/main.dc5800d2.chunk.js",
     "main.js.map": "/TodoProject/static/js/main.dc5800d2.chunk.js.map",
     "runtime-main.js": "/TodoProject/static/js/runtime-main.0207cffa.js",
@@ -9,16 +9,16 @@
     "static/js/2.f5b3fcc1.chunk.js": "/TodoProject/static/js/2.f5b3fcc1.chunk.js",
     "static/js/2.f5b3fcc1.chunk.js.map": "/TodoProject/static/js/2.f5b3fcc1.chunk.js.map",
     "index.html": "/TodoProject/index.html",
-    "precache-manifest.3619b8d0ed3a82cae3269b7b52ee92bc.js": "/TodoProject/precache-manifest.3619b8d0ed3a82cae3269b7b52ee92bc.js",
+    "precache-manifest.619d9516ef5c1b40901a69b8c56f8386.js": "/TodoProject/precache-manifest.619d9516ef5c1b40901a69b8c56f8386.js",
     "service-worker.js": "/TodoProject/service-worker.js",
     "static/css/2.0624914a.chunk.css.map": "/TodoProject/static/css/2.0624914a.chunk.css.map",
-    "static/css/main.323fea3d.chunk.css.map": "/TodoProject/static/css/main.323fea3d.chunk.css.map"
+    "static/css/main.f7e99d48.chunk.css.map": "/TodoProject/static/css/main.f7e99d48.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.0207cffa.js",
     "static/css/2.0624914a.chunk.css",
     "static/js/2.f5b3fcc1.chunk.js",
-    "static/css/main.323fea3d.chunk.css",
+    "static/css/main.f7e99d48.chunk.css",
     "static/js/main.dc5800d2.chunk.js"
   ]
 }
