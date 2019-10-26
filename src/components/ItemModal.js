@@ -35,13 +35,13 @@ const ItemModal = (props) => {
         color="dark"
         style={{ marginBottom: '2rem', width: "100%" }}
         onClick={toggle}
-      >Add Todo</Button>
+      >{props.title}</Button>
 
       <Modal
         isOpen={modal}
         toggle={toggle}
       >
-        <ModalHeader toggle={toggle}>Add Todo</ModalHeader>
+        <ModalHeader toggle={toggle}>{props.title}</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
             <FormGroup>
@@ -50,14 +50,14 @@ const ItemModal = (props) => {
                 type="todo"
                 name="name"
                 id="todo"
-                placeholder="Add todo"
+                placeholder={props.title}
                 onChange={onChange}
               ></Input>
               <Button
                 color="dark"
                 style={{ marginTop: '2rem' }}
                 block
-              >Add Todo</Button>
+              >{props.title}</Button>
             </FormGroup>
           </Form>
         </ModalBody>

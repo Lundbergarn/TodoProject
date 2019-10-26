@@ -1,3 +1,7 @@
+.container {
+  background: white;
+  padding-bottom: 20px;
+}
 .remove-btn {
   margin-right: 0.5rem;
 }
@@ -56,8 +60,9 @@
   to {transform: translateX(0px); opacity: 1}
 }
 
-.finished span{
+.finished{
   text-decoration: line-through;
+  color: #dc3545;
 }
 
 .animated-draggable-item {

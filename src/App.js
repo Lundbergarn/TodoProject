@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import TodoList from './components/TodoList';
 import { Container } from 'reactstrap';
 
+import TodoList from './components/TodoList';
+import Navbar from './components/Navbar';
+
+
 function App() {
+  const [selectedList, setSelectedList] = useState('Home')
+  console.log(selectedList)
   return (
     <div className="App">
       <Container>
-        {<h1 style={{textAlign: "center", marginTop: "20px"}}>TodoList</h1>}
-        <TodoList />
+        <Navbar selectList={setSelectedList}/>
+        <TodoList selectedList={selectedList}/>
       </Container>
     </div>
   );

@@ -1,4 +1,6 @@
 .App {
+  background: #f4f4f4;
+  height: 100vh;
   text-align: left;
   width: 100vw;
   overflow: hidden;

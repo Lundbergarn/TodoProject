@@ -12,12 +12,12 @@ import uuid from 'uuid';
 import './styles.css';
 import InputModal from './ItemModal';
 
-const TodoList = () => {
+const TodoList = (props) => {
   const [items, setItems] = useState([
-    { id: uuid(), text: 'Buy eggs', checked: '' },
-    { id: uuid(), text: 'Pay bills', checked: '' },
-    { id: uuid(), text: 'Invite friends over', checked: '' },
-    { id: uuid(), text: 'Fix the TV', checked: '' },
+    { id: uuid(), list: 'home', text: 'Buy eggs', checked: '' },
+    { id: uuid(), list: 'work', text: 'Invite friends over', checked: '' },
+    { id: uuid(), list: 'home', text: 'Pay bills', checked: '' },
+    { id: uuid(), list: 'work', text: 'Fix the TV', checked: '' },
   ]);
 
   const [openUpdateText, setOpenUpdateText] = useState('');
@@ -26,7 +26,7 @@ const TodoList = () => {
 
   function addItem(text) {
     if (text) {
-      setItems(items => [...items, { id: uuid(), text }]);
+      setItems(items => [...items, { id: uuid(), list: props.selectedList.toLowerCase(), text, checked: '' }]);
     }
   }
 
@@ -90,75 +90,82 @@ const TodoList = () => {
   }
   
   function handleFinished(e, id) {
-    e.classList.toggle("finished")
+    e.closest(".list-group-item").classList.toggle("finished")
     handleCheckbox(id)
   }
 
   return (
-    <div style={{ margin: '2rem auto'}}>
+    <div style={{ margin: '2rem auto', padding: "0 20px"}}>
       <ListGroup  style={{ marginBottom: '1rem' }}>
         <TransitionGroup className="todo-list drag-container">
-          {items.map(({ id, text, checked }) => (
-            <CSSTransition
-              key={id}
-              timeout={500}
-              classNames="item"
-            > 
-              <ListGroup.Item
-                className="drag-box"
-                dragobj="0"
-                onClick={(e) => handleFinished(e.target, id)}
-              >
-
-                {/* <CustomInput
-                  onChange={() => handleCheckbox(id)}
-                  checked={checked}
-                  type="checkbox"
-                  id={`"finish"${id}`}
-                /> */}
-                
-                <Button
-                  className="remove-btn"
-                  variant="danger"
-                  size="sm"
-                  onClick={(e) => removeItem(e, id)}
+          {items.map(({ id, text, checked, list }) => {
+            if(props.selectedList.toLowerCase() !== list) {
+              return (null);
+            }
+            return (
+              <CSSTransition
+                key={id}
+                timeout={500}
+                classNames="item"
+              > 
+                <ListGroup.Item
+                  className="drag-box"
+                  dragobj="0"
+                  onClick={(e) => handleFinished(e.target, id)}
                 >
-                  <i className="material-icons">delete</i>
-                </Button>
 
-                <Button
-                  variant="info"
-                  size="sm"
-                  onClick={(e) => toggleUpdateInput(e, text, id)}
-                >
-                  <i className="material-icons">edit</i>
-                </Button>
+                  {/* <CustomInput
+                    onChange={() => handleCheckbox(id)}
+                    checked={checked}
+                    type="checkbox"
+                    id={`"finish"${id}`}
+                  /> */}
+                  
+                  <Button
+                    className="remove-btn"
+                    variant="danger"
+                    size="sm"
+                    onClick={(e) => removeItem(e, id)}
+                  >
+                    <i className="material-icons">delete</i>
+                  </Button>
 
-                <span style={{padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
+                  <Button
+                    variant="info"
+                    size="sm"
+                    onClick={(e) => toggleUpdateInput(e, text, id)}
+                  >
+                    <i className="material-icons">edit</i>
+                  </Button>
 
-                {openUpdateText === id ?
-                <Form
-                  className="form"
-                  onSubmit={(e) => onUpdateSubmit(e, id)}
-                >
-                  <Input
-                    value={updateValue}
-                    type="text"
-                    name="todo"
-                    placeholder="Update todo"
-                    onChange={(e) => handleUpdateValue(e)}
-                  ></Input>
-                </Form>
-                : null}
-                
-              </ListGroup.Item>
-            </CSSTransition>
-          ))}
+                  <span style={{ padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
+
+                  {openUpdateText === id ?
+                  <Form
+                    className="form"
+                    onSubmit={(e) => onUpdateSubmit(e, id)}
+                  >
+                    <Input
+                      value={updateValue}
+                      type="text"
+                      name="todo"
+                      placeholder="Update todo"
+                      onChange={(e) => handleUpdateValue(e)}
+                    ></Input>
+                  </Form>
+                  : null}
+                  
+                </ListGroup.Item>
+              </CSSTransition>
+              )
+            }
+          )}
         </TransitionGroup>
       </ListGroup>
 
       <InputModal
         addItem={addItem}
+        title="Add todo"
       />
     </div>
   );
