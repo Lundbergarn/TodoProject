@@ -3,19 +3,27 @@ import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } 
 
 const ItemModal = (props) => {
   const [todo, setTodo] = useState('');
+  const [list, setList] = useState('Välj lista');
   const [modal, setModal] = useState(false);
 
   function toggle() {
     setModal(!modal);
   }
 
-  function onChange(e) {
-    setTodo(e.target.value);
+  function onChange(e, state) {
+    state(e.target.value);
   }
 
   function onSubmit(e) {
     e.preventDefault();
-    props.addItem(todo);
+    if (props.title === 'Add new list') {
+      props.addItem(todo, list);
+      setTodo('');
+      toggle();
+    }
+    if (list === 'Välj lista' || todo === '') return;
+    props.addItem(todo, list);
+    setTodo('');
     toggle();
   }
 
@@ -41,8 +49,9 @@ const ItemModal = (props) => {
                 type="todo"
                 name="name"
                 id="todo"
+                value={todo}
                 placeholder={props.title}
-                onChange={onChange}
+                onChange={(e) => onChange(e, setTodo)}
               ></Input>
 
             </FormGroup>
@@ -51,10 +60,12 @@ const ItemModal = (props) => {
               <FormGroup>
                 <Label for="exampleSelect">Select List</Label>
                 <Input
+                  onChange={(e) => onChange(e, setList)}
                   type="select"
                   name="select"
                   id="exampleSelect"
                 >
+                  <option>Välj lista</option>
                   {props.lists.map(list => {
                     return (
                       <option key={list.title}>{list.title}</option>

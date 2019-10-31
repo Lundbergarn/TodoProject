@@ -21,11 +21,19 @@ const TodoList = (props) => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   const listItems = document.querySelectorAll('.drag-box');
+  //   const order = [];
+  //   listItems.forEach(todo => {
+  //     order.push(todo.attributes._id.nodeValue)
+  //   })
+  //   console.log(order)
+  // });
 
   // Add a new todo item
-  function addItem(text) {
+  function addItem(text, list) {
     if (text) {
-      let input = { id: uuid(), list: props.selectedList.toLowerCase(), text, checked: '' }
+      let input = { id: uuid(), list: list.toLowerCase(), text, checked: '' }
       setItems(items => [...items, input]);
       localStorage.setItem('todo', JSON.stringify([...items, input]));
     }
@@ -122,6 +130,7 @@ const TodoList = (props) => {
                 key={id}
                 className="drag-box"
                 dragobj="0"
+                _id={id}
                 onClick={(e) => handleFinished(e.target, id)}
               >
 
