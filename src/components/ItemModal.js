@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  Form,
-  FormGroup,
-  Label,
-  Input
-} from 'reactstrap';
-
+import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const ItemModal = (props) => {
   const [todo, setTodo] = useState('');
@@ -32,19 +22,20 @@ const ItemModal = (props) => {
   return (
     <div>
       <Button
-        color="dark"
-        style={{ marginBottom: '2rem', width: "100%" }}
+        color="info"
+        style={{ marginBottom: '2rem', width: '100%' }}
         onClick={toggle}
-      >{props.title}</Button>
-
-      <Modal
-        isOpen={modal}
-        toggle={toggle}
       >
+        {props.title}
+      </Button>
+
+      <Modal isOpen={modal} toggle={toggle}>
         <ModalHeader toggle={toggle}>{props.title}</ModalHeader>
         <ModalBody>
           <Form onSubmit={onSubmit}>
+
             <FormGroup>
+
               <Label for="todo">Todo</Label>
               <Input
                 type="todo"
@@ -53,12 +44,35 @@ const ItemModal = (props) => {
                 placeholder={props.title}
                 onChange={onChange}
               ></Input>
-              <Button
-                color="dark"
-                style={{ marginTop: '2rem' }}
-                block
-              >{props.title}</Button>
+
             </FormGroup>
+
+            {props.option === "true" ?
+              <FormGroup>
+                <Label for="exampleSelect">Select List</Label>
+                <Input
+                  type="select"
+                  name="select"
+                  id="exampleSelect"
+                >
+                  {props.lists.map(list => {
+                    return (
+                      <option key={list.title}>{list.title}</option>
+                    )
+                  })}
+                </Input>
+              </FormGroup>
+
+              : null}
+
+            <Button
+              color="info"
+              style={{ marginTop: '2rem' }}
+              block
+            >
+              {props.title}
+            </Button>
+
           </Form>
         </ModalBody>
       </Modal>

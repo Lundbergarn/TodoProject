@@ -1,77 +1,85 @@
-import React, { useState } from 'react';
-import {
-  ListGroup,
-  Button } from 'react-bootstrap';
-import {
-  Input,
-  Form
-} from 'reactstrap';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import React, { useState, useEffect } from 'react';
+import { ListGroup, Button } from 'react-bootstrap';
+import { Input, Form } from 'reactstrap';
 import uuid from 'uuid';
 
 import './styles.css';
 import InputModal from './ItemModal';
 
 const TodoList = (props) => {
-  const [items, setItems] = useState([
-    { id: uuid(), list: 'home', text: 'Buy eggs', checked: '' },
-    { id: uuid(), list: 'work', text: 'Invite friends over', checked: '' },
-    { id: uuid(), list: 'home', text: 'Pay bills', checked: '' },
-    { id: uuid(), list: 'work', text: 'Fix the TV', checked: '' },
-  ]);
-
+  const [items, setItems] = useState([]);
   const [openUpdateText, setOpenUpdateText] = useState('');
   const [updateValue, setUpdateValue] = useState('');
 
+  // Load todos from localstorage
+  useEffect(() => {
+    const todos = localStorage.getItem('todo');
+    if (todos) {
+      setItems(JSON.parse(todos));
+    } else {
+      setItems([]);
+    }
+  }, []);
 
+
+  // Add a new todo item
   function addItem(text) {
     if (text) {
-      setItems(items => [...items, { id: uuid(), list: props.selectedList.toLowerCase(), text, checked: '' }]);
+      let input = { id: uuid(), list: props.selectedList.toLowerCase(), text, checked: '' }
+      setItems(items => [...items, input]);
+      localStorage.setItem('todo', JSON.stringify([...items, input]));
     }
   }
 
+
+  // Remove item class and state
   function removeItem(e, id) {
+    e.target.classList.remove('remove-transition');
+    e.target.closest('button').classList.remove('remove-transition');
     e.stopPropagation();
-    setItems(items =>
-      items.filter(item => item.id !== id)
-    )
+    setTimeout(() => {
+      setItems(items =>
+        items.filter(item => item.id !== id)
+      )
+    }, 500);
   }
-  
+
+
+  // Handle update state
   function handleUpdateValue(e) {
     setUpdateValue(e.target.value);
   }
-
+  // toggle input element for right todo
   function toggleUpdateInput(e, text, id) {
     e.stopPropagation();
-    if (openUpdateText === '') 
-    {
+    // if no input is open
+    if (openUpdateText === '') {
       setUpdateValue(text)
       setOpenUpdateText(id);
     }
-    else if (openUpdateText === id) 
-    {
+    // close input on same todo item
+    else if (openUpdateText === id) {
       setOpenUpdateText('');
       updateItem(id, updateValue);
       setOpenUpdateText('');
       setUpdateValue('');
     }
-    else 
-    {
+    else {
       setOpenUpdateText(id);
       setUpdateValue(text)
     }
   }
-
+  // Update item state
   function updateItem(id, input) {
     let updates = items.map(item => {
-      if(item.id === id) {
+      if (item.id === id) {
         item.text = input;
       }
       return item;
     });
     setItems([...updates]);
   }
-
+  // handle update submit
   function onUpdateSubmit(e, id) {
     e.preventDefault();
     updateItem(id, updateValue);
@@ -79,68 +87,64 @@ const TodoList = (props) => {
     setUpdateValue('');
   }
 
+
+
+  // handle finish state
   function handleCheckbox(id) {
     let updates = items.map(item => {
-      if(item.id === id) {
+      if (item.id === id) {
         item.checked = !item.checked;
       }
       return item;
     });
     setItems([...updates]);
   }
-  
+  // handle finish classlist
   function handleFinished(e, id) {
     e.closest(".list-group-item").classList.toggle("finished")
     handleCheckbox(id)
   }
 
   return (
-    <div style={{ margin: '2rem auto', padding: "0 20px"}}>
-      <ListGroup  style={{ marginBottom: '1rem' }}>
-        <TransitionGroup className="todo-list drag-container">
+    <div style={{ margin: '2rem auto', padding: "0 20px" }}>
+
+      <h2 style={{ textAlign: 'center' }}>{props.selectedList}</h2>
+
+      <ListGroup style={{ marginBottom: '1rem' }}>
+
+        <div className="todo-list drag-container">
           {items.map(({ id, text, checked, list }) => {
-            if(props.selectedList.toLowerCase() !== list) {
+            if (props.selectedList.toLowerCase() !== list) {
               return (null);
             }
             return (
-              <CSSTransition
+              <ListGroup.Item
                 key={id}
-                timeout={500}
-                classNames="item"
-              > 
-                <ListGroup.Item
-                  className="drag-box"
-                  dragobj="0"
-                  onClick={(e) => handleFinished(e.target, id)}
+                className="drag-box"
+                dragobj="0"
+                onClick={(e) => handleFinished(e.target, id)}
+              >
+
+                <Button
+                  className="remove-btn remove-transition"
+                  variant="danger"
+                  size="sm"
+                  onClick={(e) => removeItem(e, id)}
                 >
+                  <i className="material-icons before-remove remove-transition">delete</i>
+                </Button>
 
-                  {/* <CustomInput
-                    onChange={() => handleCheckbox(id)}
-                    checked={checked}
-                    type="checkbox"
-                    id={`"finish"${id}`}
-                  /> */}
-                  
-                  <Button
-                    className="remove-btn"
-                    variant="danger"
-                    size="sm"
-                    onClick={(e) => removeItem(e, id)}
-                  >
-                    <i className="material-icons">delete</i>
-                  </Button>
+                <Button
+                  variant="info"
+                  size="sm"
+                  onClick={(e) => toggleUpdateInput(e, text, id)}
+                >
+                  <i className="material-icons">edit</i>
+                </Button>
 
-                  <Button
-                    variant="info"
-                    size="sm"
-                    onClick={(e) => toggleUpdateInput(e, text, id)}
-                  >
-                    <i className="material-icons">edit</i>
-                  </Button>
+                <span style={{ padding: "0 30px", lineHeight: "2.4rem" }}>{text}</span>
 
-                  <span style={{ padding: "0 30px", lineHeight: "2.4rem"}}>{text}</span>
-
-                  {openUpdateText === id ?
+                {openUpdateText === id ?
                   <Form
                     className="form"
                     onSubmit={(e) => onUpdateSubmit(e, id)}
@@ -150,22 +154,27 @@ const TodoList = (props) => {
                       type="text"
                       name="todo"
                       placeholder="Update todo"
+                      onClick={(e) => e.stopPropagation()}
                       onChange={(e) => handleUpdateValue(e)}
                     ></Input>
                   </Form>
+
                   : null}
-                  
-                </ListGroup.Item>
-              </CSSTransition>
-              )
-            }
+
+              </ListGroup.Item>
+            )
+          }
           )}
-        </TransitionGroup>
+        </div>
+
       </ListGroup>
 
       <InputModal
         addItem={addItem}
         title="Add todo"
+        option="true"
+        selectedList={props.selectedList}
+        lists={props.lists}
       />
     </div>
   );

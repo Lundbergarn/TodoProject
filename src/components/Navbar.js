@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import ItemModal from './ItemModal';
 import uuid from 'uuid';
 
 const NavbarComponent = (props) => {
   const [collapsed, setCollapsed] = useState(true);
-  const [list, setList] = useState([{id: 1, title: 'Home'}, {id: 2, title: 'Work'}]);
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    const todoList = localStorage.getItem('todoList');
+    if (todoList) {
+      setList(JSON.parse(todoList));
+    } else {
+      setList([]);
+    }
+  }, [setList]);
+
+  useEffect(() => {
+    props.setLists(list)
+  }, [collapsed, props, list]);
 
   function addItem(title) {
     if (title) {
-      setList(items => [...items, { id: uuid(), title }]);
+      let input = { id: uuid(), title }
+      setList(list => [...list, input]);
+      localStorage.setItem('todoList', JSON.stringify([...list, input]))
     }
   }
 
@@ -23,20 +38,21 @@ const NavbarComponent = (props) => {
           <ItemModal
             title="Add new list"
             addItem={addItem}
+            option="false"
           />
         </div>
-        <NavbarToggler onClick={toggleNavbar} className="mr-2"/>
+        <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
-            <NavItem style={{textAlign: "right", marginTop: "20px"}}>
+            <NavItem style={{ textAlign: "right", marginTop: "20px" }}>
               {list.map(el => {
                 return (
                   <NavLink
-                  style={{borderBottom: '1px solid #ccc', marginRight: "10px"}}
-                  onClick={(e) => props.selectList(e.target.textContent)}
-                  key={el.id}
+                    style={{ borderBottom: '1px solid #ccc', marginRight: "10px" }}
+                    onClick={(e) => props.selectList(e.target.textContent)}
+                    key={el.id}
                   >
-                  {el.title}
+                    {el.title}
                   </NavLink>
                 )
               })}
