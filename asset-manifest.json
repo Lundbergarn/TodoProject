@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/TodoProject/static/css/main.bc861772.chunk.css",
-    "main.js": "/TodoProject/static/js/main.22b532fd.chunk.js",
-    "main.js.map": "/TodoProject/static/js/main.22b532fd.chunk.js.map",
+    "main.css": "/TodoProject/static/css/main.818634a7.chunk.css",
+    "main.js": "/TodoProject/static/js/main.e0437fed.chunk.js",
+    "main.js.map": "/TodoProject/static/js/main.e0437fed.chunk.js.map",
     "runtime-main.js": "/TodoProject/static/js/runtime-main.0207cffa.js",
     "runtime-main.js.map": "/TodoProject/static/js/runtime-main.0207cffa.js.map",
     "static/css/2.0624914a.chunk.css": "/TodoProject/static/css/2.0624914a.chunk.css",
-    "static/js/2.b8d4f9b2.chunk.js": "/TodoProject/static/js/2.b8d4f9b2.chunk.js",
-    "static/js/2.b8d4f9b2.chunk.js.map": "/TodoProject/static/js/2.b8d4f9b2.chunk.js.map",
+    "static/js/2.134a6574.chunk.js": "/TodoProject/static/js/2.134a6574.chunk.js",
+    "static/js/2.134a6574.chunk.js.map": "/TodoProject/static/js/2.134a6574.chunk.js.map",
     "index.html": "/TodoProject/index.html",
-    "precache-manifest.b9cd233b6e2345b1dd43bac4b5bf7a89.js": "/TodoProject/precache-manifest.b9cd233b6e2345b1dd43bac4b5bf7a89.js",
+    "precache-manifest.b84c8ca10e7752f4e96b74e022b12165.js": "/TodoProject/precache-manifest.b84c8ca10e7752f4e96b74e022b12165.js",
     "service-worker.js": "/TodoProject/service-worker.js",
     "static/css/2.0624914a.chunk.css.map": "/TodoProject/static/css/2.0624914a.chunk.css.map",
-    "static/css/main.bc861772.chunk.css.map": "/TodoProject/static/css/main.bc861772.chunk.css.map"
+    "static/css/main.818634a7.chunk.css.map": "/TodoProject/static/css/main.818634a7.chunk.css.map"
   },
   "entrypoints": [
     "static/js/runtime-main.0207cffa.js",
     "static/css/2.0624914a.chunk.css",
-    "static/js/2.b8d4f9b2.chunk.js",
-    "static/css/main.bc861772.chunk.css",
-    "static/js/main.22b532fd.chunk.js"
+    "static/js/2.134a6574.chunk.js",
+    "static/css/main.818634a7.chunk.css",
+    "static/js/main.e0437fed.chunk.js"
   ]
 }
