@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ListGroup, Button } from 'react-bootstrap';
-import { Input, Form } from 'reactstrap';
+import { ListGroup } from 'react-bootstrap';
 import uuid from 'uuid';
 
-import './styles.css';
+import './styles_todolist.css';
 import InputModal from './ItemModal';
+import ListItem from './ListItem';
 
 const TodoList = (props) => {
   const [items, setItems] = useState([]);
@@ -21,14 +21,6 @@ const TodoList = (props) => {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const listItems = document.querySelectorAll('.drag-box');
-  //   const order = [];
-  //   listItems.forEach(todo => {
-  //     order.push(todo.attributes._id.nodeValue)
-  //   })
-  //   console.log(order)
-  // });
 
   // Add a new todo item
   function addItem(text, list) {
@@ -114,7 +106,7 @@ const TodoList = (props) => {
   }
 
   return (
-    <div style={{ margin: '2rem auto', padding: "0 20px" }}>
+    <div style={{ margin: '1rem auto', padding: "0 20px" }}>
 
       <h2 style={{ textAlign: 'center' }}>{props.selectedList}</h2>
 
@@ -126,51 +118,19 @@ const TodoList = (props) => {
               return (null);
             }
             return (
-              <ListGroup.Item
-                key={id}
-                className="drag-box"
-                dragobj="0"
-                _id={id}
-                onClick={(e) => handleFinished(e.target, id)}
-              >
-
-                <Button
-                  className="remove-btn remove-transition"
-                  variant="danger"
-                  size="sm"
-                  onClick={(e) => removeItem(e, id)}
-                >
-                  <i className="material-icons before-remove remove-transition">delete</i>
-                </Button>
-
-                <Button
-                  variant="info"
-                  size="sm"
-                  onClick={(e) => toggleUpdateInput(e, text, id)}
-                >
-                  <i className="material-icons">edit</i>
-                </Button>
-
-                <span style={{ padding: "0 30px", lineHeight: "2.4rem" }}>{text}</span>
-
-                {openUpdateText === id ?
-                  <Form
-                    className="form"
-                    onSubmit={(e) => onUpdateSubmit(e, id)}
-                  >
-                    <Input
-                      value={updateValue}
-                      type="text"
-                      name="todo"
-                      placeholder="Update todo"
-                      onClick={(e) => e.stopPropagation()}
-                      onChange={(e) => handleUpdateValue(e)}
-                    ></Input>
-                  </Form>
-
-                  : null}
-
-              </ListGroup.Item>
+              <ListItem 
+                handleFinished = {handleFinished}
+                removeItem = {removeItem}
+                toggleUpdateInput = {toggleUpdateInput}
+                onUpdateSubmit = {onUpdateSubmit}
+                handleUpdateValue = {handleUpdateValue}
+                openUpdateText = {openUpdateText}
+                updateValue = {updateValue}
+                id = {id}
+                text = {text}
+                checked = {checked}
+                list = {list}
+              /> 
             )
           }
           )}

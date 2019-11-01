@@ -2,13 +2,9 @@
   background: white;
   padding-bottom: 20px;
 }
-.navbar-nav {
-  padding: 0 0 20px 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(0,0,0,0.1);
-}
-.navbar-brand {
-  font-size: 1.75rem;
+.btn {
+  min-width: 40px;
+  height: 40px;
 }
 .remove-btn {
   margin-right: 0.5rem;
@@ -21,10 +17,6 @@
 }
 .remove-transition {
   opacity: 1;
-}
-.btn {
-  min-width: 40px;
-  height: 40px;
 }
 .btn-success {
   min-width: 300px;
@@ -73,8 +65,10 @@
   position: relative;
 }
 @keyframes inputSwipe {
-  from {transform: translateX(200px); opacity: 0};
-  to {transform: translateX(0px); opacity: 1}
+  /* from {transform: translateX(200px); opacity: 0};
+  to {transform: translateX(0px); opacity: 1} */
+  from {transform: scale(0); opacity: 0};
+  to {transform: scale(1); opacity: 1}
 }
 
 .finished{
@@ -95,3 +89,21 @@
   transition: none;
 }
 
+@media only screen and (max-width: 600px) {
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  .navbar-collapse {
+    margin-top: 10px;
+  }
+  .container {
+    padding: 0;
+    height: 100%;
+  }
+  .list-group-item {
+    display: block;
+  }
+  .form-control {
+    margin-top: 10px;
+  }
+}

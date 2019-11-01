@@ -3,6 +3,8 @@ import { Collapse, Navbar, NavbarToggler, NavbarBrand, Nav, NavItem, NavLink } f
 import ItemModal from './ItemModal';
 import uuid from 'uuid';
 
+import './styles_navbar.css';
+
 const NavbarComponent = (props) => {
   const [collapsed, setCollapsed] = useState(true);
   const [list, setList] = useState([]);
@@ -36,7 +38,7 @@ const NavbarComponent = (props) => {
         <NavbarBrand className="mr-auto">Todo List</NavbarBrand>
         <div className="mr-2">
           <ItemModal
-            title="Add new list"
+            title="Add list"
             addItem={addItem}
             option="false"
           />
@@ -44,19 +46,18 @@ const NavbarComponent = (props) => {
         <NavbarToggler onClick={toggleNavbar} className="mr-2" />
         <Collapse isOpen={!collapsed} navbar>
           <Nav navbar>
-            <NavItem style={{ textAlign: "right", marginTop: "20px" }}>
               {list.map(el => {
                 return (
-                  <NavLink
-                    style={{ borderBottom: '1px solid #ccc', marginRight: "10px" }}
-                    onClick={(e) => props.selectList(e.target.textContent)}
-                    key={el.id}
-                  >
-                    {el.title}
-                  </NavLink>
+                  <NavItem>
+                    <NavLink
+                      onClick={(e) => props.selectList(e.target.textContent)}
+                      key={el.id}
+                    >
+                      {el.title}
+                    </NavLink>
+                  </NavItem>
                 )
               })}
-            </NavItem>
           </Nav>
         </Collapse>
       </Navbar>

@@ -16,7 +16,7 @@ const ItemModal = (props) => {
 
   function onSubmit(e) {
     e.preventDefault();
-    if (props.title === 'Add new list') {
+    if (props.title === 'Add list') {
       props.addItem(todo, list);
       setTodo('');
       toggle();
@@ -31,7 +31,7 @@ const ItemModal = (props) => {
     <div>
       <Button
         color="info"
-        style={{ marginBottom: '2rem', width: '100%' }}
+        style={{ width: '100%' }}
         onClick={toggle}
       >
         {props.title}
@@ -78,7 +78,6 @@ const ItemModal = (props) => {
 
             <Button
               color="info"
-              style={{ marginTop: '2rem' }}
               block
             >
               {props.title}

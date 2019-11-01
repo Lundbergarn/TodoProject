@@ -1,0 +1,22 @@
+.navbar {
+  background: #f4f4f4;
+  padding-bottom: 15px;
+}
+.navbar-nav {
+  padding: 0 0 20px 10px;
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background-color: #ffffff;
+}
+.navbar-brand {
+  font-size: 1.75rem;
+}
+.nav-item {
+  text-align: center;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.navbar-light .navbar-nav .nav-link {
+  border-bottom: 1px solid #ccc;
+  margin-right: 10px;
+}
