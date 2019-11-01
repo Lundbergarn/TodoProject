@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Modal, ModalHeader, ModalBody, Form, FormGroup, Label, Input } from 'reactstrap';
 
 const ItemModal = (props) => {
   const [todo, setTodo] = useState('');
-  const [list, setList] = useState('Välj lista');
+  const [list, setList] = useState();
   const [modal, setModal] = useState(false);
 
+  useEffect(() => {
+    setList(props.selectedList)
+  },[props.selectedList]);
+  
   function toggle() {
     setModal(!modal);
   }
@@ -21,7 +25,9 @@ const ItemModal = (props) => {
       setTodo('');
       toggle();
     }
-    if (list === 'Välj lista' || todo === '') return;
+    if (list === undefined || todo === '') return;
+    console.log(todo)
+    console.log(list)
     props.addItem(todo, list);
     setTodo('');
     toggle();
@@ -64,6 +70,7 @@ const ItemModal = (props) => {
                   type="select"
                   name="select"
                   id="exampleSelect"
+                  value={list}
                 >
                   <option>Välj lista</option>
                   {props.lists.map(list => {

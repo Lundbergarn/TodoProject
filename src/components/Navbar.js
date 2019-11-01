@@ -7,14 +7,14 @@ import './styles_navbar.css';
 
 const NavbarComponent = (props) => {
   const [collapsed, setCollapsed] = useState(true);
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([{id: '5e36gdf', title: 'Todo'}]);
 
   useEffect(() => {
     const todoList = localStorage.getItem('todoList');
     if (todoList) {
       setList(JSON.parse(todoList));
     } else {
-      setList([]);
+      return;
     }
   }, [setList]);
 
@@ -26,6 +26,7 @@ const NavbarComponent = (props) => {
     if (title) {
       let input = { id: uuid(), title }
       setList(list => [...list, input]);
+      console.log('setlist')
       localStorage.setItem('todoList', JSON.stringify([...list, input]))
     }
   }

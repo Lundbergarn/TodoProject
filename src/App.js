@@ -7,7 +7,7 @@ import TodoList from './components/TodoList';
 import Navbar from './components/Navbar';
 
 function App() {
-  const [selectedList, setSelectedList] = useState('');
+  const [selectedList, setSelectedList] = useState('Todo');
   const [lists, setLists] = useState([]);
   return (
     <div className="App">

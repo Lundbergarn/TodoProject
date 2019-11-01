@@ -4,7 +4,7 @@ import { Input, Form } from 'reactstrap';
 
 const ListItem = (props) => {
 
-  const { handleFinished, removeItem, toggleUpdateInput, onUpdateSubmit, handleUpdateValue, id, text, checked, list, updateValue, openUpdateText } = props;
+  const { handleFinished, removeItem, toggleUpdateInput, onUpdateSubmit, handleUpdateValue, id, text, updateValue, openUpdateText } = props;
 
   return (
     <ListGroup.Item
